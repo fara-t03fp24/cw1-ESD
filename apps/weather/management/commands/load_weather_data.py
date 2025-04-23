@@ -61,7 +61,7 @@ class Command(BaseCommand):
                 
                 for city in cities:
                     # Base temperature for the city (varying by latitude)
-                    base_temp = 20 - (abs(city.latitude) / 5)
+                    base_temp = 20 - (abs(float(city.latitude)) / 5)
                     
                     for i in range(records_per_city):
                         # Add some randomness to the data
