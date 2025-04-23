@@ -12,4 +12,4 @@ python manage.py collectstatic --no-input
 python manage.py migrate
 
 #Load initial weather data
-python manage.py load_weather_data --records-per-city 300
+python manage.py load_weather_data --records-per-city 500
