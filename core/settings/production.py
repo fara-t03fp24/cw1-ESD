@@ -29,8 +29,15 @@ CSRF_TRUSTED_ORIGINS = [
 ###################################################################
 # Static files
 ###################################################################
+
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+# Remove STATICFILES_DIRS to avoid staticfiles.E002 error
+STATICFILES_DIRS = []  # or just `del STATICFILES_DIRS` if defined in base.py
+
+# Use WhiteNoise for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ###################################################################
 # Database
