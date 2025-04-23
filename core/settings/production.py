@@ -1,10 +1,13 @@
 from .base import *  # noqa
+import os
 
 ###################################################################
 # General
 ###################################################################
 
 DEBUG = False
+
+ALLOWED_HOSTS = ['*']  # You should replace this with your Render domain
 
 ###################################################################
 # Django security
@@ -15,8 +18,27 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
-    "https://example.com"
+    os.environ.get('RENDER_EXTERNAL_URL', 'https://your-app-name.onrender.com')
 ]
+
+###################################################################
+# Static files
+###################################################################
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+###################################################################
+# Database
+###################################################################
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DATABASE'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+    }
+}
 
 ###################################################################
 # CORS
