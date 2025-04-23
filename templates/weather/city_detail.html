@@ -1,0 +1,199 @@
+{% extends "weather/base.html" %}
+{% load static %}
+
+{% block title %}{{ city.name }} - ClimateWatch{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h1 class="display-5 mb-0">{{ city.name }}, {{ city.country }}</h1>
+                <p class="text-muted">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    {{ city.latitude }}, {{ city.longitude }}
+                </p>
+            </div>
+            <a href="{% url 'city_list' %}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Back to Cities
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2 text-primary"></i>
+                    Average Statistics
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-around text-center">
+                    <div>
+                        <i class="fas fa-temperature-high fa-2x mb-2 text-danger"></i>
+                        <h4>{{ stats.avg_temp|floatformat:1 }}°C</h4>
+                        <p class="text-muted mb-0">Temperature</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-tint fa-2x mb-2 text-primary"></i>
+                        <h4>{{ stats.avg_humidity|floatformat:0 }}%</h4>
+                        <p class="text-muted mb-0">Humidity</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-wind fa-2x mb-2 text-info"></i>
+                        <h4>{{ stats.avg_wind_speed|floatformat:1 }}</h4>
+                        <p class="text-muted mb-0">Wind (m/s)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2 text-primary"></i>
+                    Temperature Trend
+                </h5>
+            </div>
+            <div class="card-body">
+                <img src="{{ temperature_chart }}" alt="Temperature Chart" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-history me-2 text-primary"></i>
+                    Weather History
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date/Time</th>
+                                <th>Temperature</th>
+                                <th>Humidity</th>
+                                <th>Pressure</th>
+                                <th>Wind Speed</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in weather_data %}
+                            <tr>
+                                <td>
+                                    <i class="far fa-clock me-1 text-muted"></i>
+                                    {{ data.recorded_at|date:"Y-m-d H:i" }}
+                                </td>
+                                <td>
+                                    <span class="text-danger">
+                                        <i class="fas fa-temperature-high me-1"></i>
+                                        {{ data.temperature }}°C
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-primary">
+                                        <i class="fas fa-tint me-1"></i>
+                                        {{ data.humidity }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-success">
+                                        <i class="fas fa-compress-alt me-1"></i>
+                                        {{ data.pressure }} hPa
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-info">
+                                        <i class="fas fa-wind me-1"></i>
+                                        {{ data.wind_speed }} m/s
+                                    </span>
+                                </td>
+                                <td>
+                                    <i class="fas fa-cloud me-1 text-muted"></i>
+                                    {{ data.description }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                {% if weather_data.paginator.num_pages > 1 %}
+                <nav aria-label="Weather data pagination" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if weather_data.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ weather_data.previous_page_number }}" aria-label="Previous">
+                                    <i class="fas fa-angle-left"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    <i class="fas fa-angle-left"></i>
+                                </span>
+                            </li>
+                        {% endif %}
+
+                        {% for num in weather_data.paginator.page_range %}
+                            {% if weather_data.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > weather_data.number|add:'-3' and num < weather_data.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if weather_data.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ weather_data.next_page_number }}" aria-label="Next">
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ weather_data.paginator.num_pages }}" aria-label="Last">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    <i class="fas fa-angle-right"></i>
+                                </span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

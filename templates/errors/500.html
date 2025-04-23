@@ -1,0 +1,21 @@
+{% extends "weather/base.html" %}
+
+{% block title %}Server Error - ClimateWatch{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5">
+    <div class="error-container">
+        <i class="fas fa-bolt fa-5x mb-4 text-warning"></i>
+        <h1 class="display-1 mb-4">500</h1>
+        <h2 class="h3 mb-4">Thunder Strikes! Our Systems are Experiencing Turbulence</h2>
+        <p class="lead text-muted mb-4">
+            Our weather stations are experiencing some technical difficulties. 
+            Don't worry, our meteorological team is working to clear the skies.
+        </p>
+        <a href="{% url 'city_list' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-home me-2"></i>
+            Return to Weather Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

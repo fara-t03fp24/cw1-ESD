@@ -1,0 +1,20 @@
+{% extends "weather/base.html" %}
+
+{% block title %}No Results - ClimateWatch{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5">
+    <div class="error-container">
+        <i class="fas fa-sun fa-5x mb-4 text-warning"></i>
+        <h2 class="h3 mb-4">Clear Skies, But Nothing to Show</h2>
+        <p class="lead text-muted mb-4">
+            Like a cloudless day with no weather events to report,
+            we couldn't find any data matching your request.
+        </p>
+        <a href="{% url 'city_list' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-sync-alt me-2"></i>
+            Try Another Search
+        </a>
+    </div>
+</div>
+{% endblock %}

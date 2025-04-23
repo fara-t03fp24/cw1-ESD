@@ -1,0 +1,116 @@
+{% extends "weather/base.html" %}
+
+{% block title %}Cities - ClimateWatch{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4">Global Weather Monitor</h1>
+    <p class="lead text-muted">Real-time weather data from cities around the world</p>
+</div>
+
+{% if weather_summary %}
+<div class="weather-summary mb-5">
+    <h2 class="h4 mb-4 text-center">Weather Highlights</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="summary-card hottest">
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-temperature-high"></i>
+                    </div>
+                    <div class="info">
+                        <h3>Hottest City</h3>
+                        <div class="city-name">{{ weather_summary.hottest_city.name }}</div>
+                        <div class="country">{{ weather_summary.hottest_city.country }}</div>
+                        <div class="value">{{ weather_summary.hottest_city.stats.avg_temp|floatformat:1 }}°C</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="summary-card coldest">
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-temperature-low"></i>
+                    </div>
+                    <div class="info">
+                        <h3>Coldest City</h3>
+                        <div class="city-name">{{ weather_summary.coldest_city.name }}</div>
+                        <div class="country">{{ weather_summary.coldest_city.country }}</div>
+                        <div class="value">{{ weather_summary.coldest_city.stats.avg_temp|floatformat:1 }}°C</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="summary-card humid">
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="info">
+                        <h3>Most Humid</h3>
+                        <div class="city-name">{{ weather_summary.most_humid_city.name }}</div>
+                        <div class="country">{{ weather_summary.most_humid_city.country }}</div>
+                        <div class="value">{{ weather_summary.most_humid_city.stats.avg_humidity|floatformat:0 }}%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="summary-card windy">
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="info">
+                        <h3>Windiest City</h3>
+                        <div class="city-name">{{ weather_summary.windiest_city.name }}</div>
+                        <div class="country">{{ weather_summary.windiest_city.country }}</div>
+                        <div class="value">{{ weather_summary.windiest_city.stats.avg_wind_speed|floatformat:1 }} m/s</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row g-4">
+    {% for city in cities %}
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-city weather-icon"></i>
+                <h5 class="card-title mb-3">{{ city.name }}, {{ city.country }}</h5>
+                <div class="weather-stats">
+                    <p class="mb-2">
+                        <i class="fas fa-temperature-high text-danger"></i>
+                        <strong>Temperature:</strong> {{ city.stats.avg_temp|floatformat:1 }}°C
+                    </p>
+                    <p class="mb-2">
+                        <i class="fas fa-tint text-primary"></i>
+                        <strong>Humidity:</strong> {{ city.stats.avg_humidity|floatformat:0 }}%
+                    </p>
+                    <p class="mb-3">
+                        <i class="fas fa-wind text-info"></i>
+                        <strong>Wind Speed:</strong> {{ city.stats.avg_wind_speed|floatformat:1 }} m/s
+                    </p>
+                </div>
+                <a href="{% url 'city_detail' city.pk %}" class="btn btn-primary">
+                    <i class="fas fa-chart-line me-1"></i>
+                    View Details
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle me-2"></i>
+            No cities available. Please add some cities through the admin interface.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

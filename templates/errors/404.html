@@ -1,0 +1,20 @@
+{% extends "weather/base.html" %}
+
+{% block title %}Page Not Found - ClimateWatch{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5">
+    <div class="error-container">
+        <i class="fas fa-cloud-rain fa-5x mb-4 text-primary"></i>
+        <h1 class="display-1 mb-4">404</h1>
+        <h2 class="h3 mb-4">Oops! Looks like this page got lost in the storm</h2>
+        <p class="lead text-muted mb-4">
+            Just like an unexpected weather pattern, the page you're looking for seems to have drifted away.
+        </p>
+        <a href="{% url 'city_list' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-home me-2"></i>
+            Return to Weather Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}
