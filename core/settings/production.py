@@ -1,18 +1,16 @@
 from .base import *  # noqa
 import os
 
-# Override the default SECRET_KEY with a required environment variable in production
-SECRET_KEY = os.environ.get('SECRET_KEY')
-if not SECRET_KEY:
-    raise ValueError("SECRET_KEY environment variable is required in production!")
-
 ###################################################################
 # General
 ###################################################################
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']  # You should replace this with your Render domain
+# Use environment variable for SECRET_KEY, falling back to base.py's value
+SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
+
+ALLOWED_HOSTS = ['*']
 
 ###################################################################
 # Django security
