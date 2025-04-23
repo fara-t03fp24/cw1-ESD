@@ -9,7 +9,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # READING ENV
 env = environ.Env()
-env.read_env(os.path.join(BASE_DIR, ".env"))
+
+# Only try to read a .env file if it exists (for local dev)
+env_path = os.path.join(BASE_DIR, ".env")
+if os.path.exists(env_path):
+    env.read_env(env_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
