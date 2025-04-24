@@ -1,0 +1,14 @@
+1c2ce35	fara-t03fp24	Wed Apr 23 19:28:40 2025	fix: safely load .env only if file exists to avoid warnings in production
+c6621ac	fara-t03fp24	Wed Apr 23 19:24:49 2025	fix: convert Decimal to float in weather data loader to avoid type error
+6a9b75c	fara-t03fp24	Wed Apr 23 19:20:26 2025	upd: run load_weather_data during deployment with 500 records per city
+3fe932f	fara-t03fp24	Wed Apr 23 19:12:56 2025	Added initial weather data loader command
+ec7a034	fara-t03fp24	Wed Apr 23 18:58:20 2025	Add WhiteNoise middleware and update static file settings for production
+835e86e	fara-t03fp24	Wed Apr 23 17:48:29 2025	Update database configuration to use DATABASE_URL
+6c123b6	fara-t03fp24	Wed Apr 23 17:43:53 2025	Add specific Render.com domain to allowed hosts and CSRF trusted origins
+0e8832c	fara-t03fp24	Wed Apr 23 17:42:13 2025	Update production settings to handle SECRET_KEY gracefully
+8cf7efc	fara-t03fp24	Wed Apr 23 17:39:14 2025	Update render.yaml with proper environment variables
+78234e0	fara-t03fp24	Wed Apr 23 17:32:14 2025	Fix SECRET_KEY handling in settings
+4bf0b6a	fara-t03fp24	Wed Apr 23 17:00:36 2025	Specify psycopg2-binary version in production requirements
+91dc1e5	fara-t03fp24	Wed Apr 23 16:44:54 2025	Add psycopg2-binary for PostgreSQL support
+bb8e477	fara-t03fp24	Wed Apr 23 16:42:36 2025	Add Render.com deployment configuration
+ebc5b5f	fara-t03fp24	Wed Apr 23 15:59:18 2025	Initial commit
