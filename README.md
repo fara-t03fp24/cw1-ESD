@@ -78,6 +78,7 @@ python manage.py runserver
 
 Visit our live application: [ClimateWatch on Render](https://cw1-esd.onrender.com)
 
+*Note: The app may take a few moments to load. Please be patient!*
 ## Project Structure
 ```
 ├── apps/
