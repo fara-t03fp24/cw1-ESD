@@ -1,3 +1,5 @@
+c62f5eb	fara-t03fp24	Thu Apr 24 15:58:19 2025	Update in Live Demo section
+e7c3c08	fara-t03fp24	Thu Apr 24 15:43:09 2025	docs: update README with project details, features, and installation guide
 1c2ce35	fara-t03fp24	Wed Apr 23 19:28:40 2025	fix: safely load .env only if file exists to avoid warnings in production
 c6621ac	fara-t03fp24	Wed Apr 23 19:24:49 2025	fix: convert Decimal to float in weather data loader to avoid type error
 6a9b75c	fara-t03fp24	Wed Apr 23 19:20:26 2025	upd: run load_weather_data during deployment with 500 records per city
